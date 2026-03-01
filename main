@@ -13,8 +13,6 @@
       --chip:#f3f3f3;
       --chipText:#222;
       --link:#1a5bd7;
-      --btn:#111;
-      --btnText:#fff;
       --shadow: 0 1px 0 rgba(0,0,0,.03);
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -30,10 +28,10 @@
     a{color:var(--link); text-decoration:none}
     a:hover{text-decoration:underline}
 
-    /* FULL-WIDTH PARTICLE WAVE STRIP (replaces bagel/logo entirely) */
+    /* FULL-WIDTH PARTICLE WAVE STRIP */
     .topwave{
       position:relative;
-      height: 240px;                 /* make this taller/shorter */
+      height: 240px;
       overflow:hidden;
       background:#fff;
     }
@@ -43,11 +41,11 @@
       width:100%;
       height:100%;
       display:block;
-      pointer-events:auto;           /* we want mouse events */
+      pointer-events:auto; /* we want mouse events */
     }
 
     .wrap{
-      max-width: 760px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 24px 18px 48px;
     }
@@ -58,7 +56,7 @@
       flex-direction:column;
       align-items:center;
       gap: 12px;
-      margin-top: -110px;            /* pulls content upward into the wave area */
+      margin-top: -110px; /* pulls content upward into the wave area */
       margin-bottom: 18px;
       position:relative;
       z-index: 2;
@@ -74,7 +72,7 @@
     .blurb{
       font-size: 12px;
       color:var(--muted);
-      max-width: 640px;
+      max-width: 720px;
       text-align:left;
       width:100%;
     }
@@ -87,6 +85,7 @@
       display:flex;
       gap: 10px;
       flex-wrap:wrap;
+      max-width: 720px;
     }
 
     .divider{
@@ -105,7 +104,15 @@
       font-size: 12px;
       color:var(--muted);
       margin: 0 0 12px;
+      max-width: 960px;
     }
+    .bullet-notes{
+      margin: 0 0 12px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .bullet-notes li{ margin: 4px 0; }
 
     /* Search + filters */
     .controls{
@@ -155,10 +162,19 @@
     }
 
     /* Table */
+    .table-wrap{
+      width:100%;
+      overflow:auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
     table{
       width:100%;
       border-collapse: collapse;
       font-size: 12px;
+      min-width: 980px;
+      background:#fff;
     }
     thead th{
       text-align:left;
@@ -166,12 +182,14 @@
       color: var(--muted);
       font-weight: 600;
       border-bottom: 1px solid var(--border);
+      white-space: nowrap;
     }
     tbody td{
       padding: 10px 8px;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
+    tbody tr:last-child td{ border-bottom: 0; }
     .mono{font-family: var(--mono)}
     .tagstack{display:flex; gap:6px; flex-wrap:wrap}
     .pill{
@@ -181,52 +199,13 @@
       padding: 3px 8px;
       font-size: 11px;
       color:#333;
+      white-space: nowrap;
     }
 
-    /* Footer + donate cards */
     .reachout{
       font-size: 12px;
       color: var(--muted);
       margin-top: 14px;
-    }
-    .donateRow{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .card{
-      border:1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      box-shadow: var(--shadow);
-    }
-    .card h3{
-      margin:0 0 6px;
-      font-size: 12px;
-    }
-    .card p{
-      margin:0 0 10px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .btn{
-      appearance:none;
-      border: 1px solid #111;
-      background: #111;
-      color: #fff;
-      padding: 8px 12px;
-      font-size: 12px;
-      border-radius: 8px;
-      cursor:pointer;
-      box-shadow: var(--shadow);
-    }
-    .btn:active{transform: translateY(1px)}
-    .card .btn{
-      width:100%;
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 12px;
     }
 
     .tinyfooter{
@@ -240,26 +219,28 @@
     }
 
     @media (max-width: 680px){
-      .donateRow{grid-template-columns: 1fr}
       .hero{margin-top: -95px}
       .topwave{height: 220px}
       .blurb iframe{width:100%; height: 220px}
+      table{min-width: 920px;}
     }
   </style>
 </head>
 
 <body>
-  <!-- FULL STRIP WAVE PARTICLES (no bagel, no logo) -->
   <div class="topwave" id="topwave">
     <canvas id="waveStrip"></canvas>
   </div>
 
   <div class="wrap">
     <header class="hero">
+      
       <h1>This site will make you lucky!</h1>
 
       <div class="blurb">
-        <p><strong>What is this site?</strong> A repository of opportunity, to make easier for you to get "lucky".</p>
+        <p><strong>What is this site?</strong> A repository of opportunity, to make it easier for you to find your next life-changing adventure.</p>
+        
+           <hr class="divider"/>
         <iframe width="560" height="315"
           src="https://www.youtube.com/embed/NmEyx9TEkRw"
           title="How to Create Luck - Dalton Caldwell"
@@ -269,209 +250,353 @@
       </div>
 
       <div class="smalllinks">
-        <a href="#" class="mono">Expose yourself to as much opportunity and situation as you can.</a>
-        <span class="mono" style="color:var(--muted)">·</span>
-        <a href="#" class="mono">Meet as many interesting people that you can.</a>
+        <a href="#" class="mono">Put yourself in situation you think you are not prepare for.</a>
+        <a href="#" class="mono">Meet as many interesting people as you can.</a>
       </div>
     </header>
 
     <hr class="divider"/>
 
     <section>
-      <div class="section-title">Need help?</div>
-      <div class="section-sub">
-        If you <a href="#" class="mono">Email us</a> your question.
-      </div>
+      <div class="section-title">Try, even if you think you are not ready!</div>
 
       <div class="controls">
-        <input id="search" class="search" placeholder="Search by age or intrest..." />
+        <input id="search" class="search" placeholder="Search by name, place, audience, or description..." />
         <div class="filters" id="filters">
           <span class="label mono">Filter by tag:</span>
-          <label class="chip" data-tag="software"><input type="checkbox">software</label>
-          <label class="chip" data-tag="deep tech"><input type="checkbox">deep tech</label>
-          <label class="chip" data-tag="health tech"><input type="checkbox">health tech</label>
-          <label class="chip" data-tag="climate"><input type="checkbox">climate</label>
-          <label class="chip" data-tag="robotics"><input type="checkbox">robotics</label>
-          <label class="chip" data-tag="aerospace"><input type="checkbox">aerospace</label>
-          <label class="chip" data-tag="ai"><input type="checkbox">ai</label>
+          <label class="chip" data-tag="community house"><input type="checkbox">community house</label>
+          <label class="chip" data-tag="hotel"><input type="checkbox">hotel</label>
+          <label class="chip" data-tag="global"><input type="checkbox">global</label>
+          <label class="chip" data-tag="sf"><input type="checkbox">sf</label>
+          <label class="chip" data-tag="europe"><input type="checkbox">europe</label>
           <label class="chip" data-tag="biotech"><input type="checkbox">biotech</label>
-          <label class="chip" data-tag="agriculture"><input type="checkbox">agriculture</label>
+          <label class="chip" data-tag="builders"><input type="checkbox">builders</label>
+          <label class="chip" data-tag="artists"><input type="checkbox">artists</label>
         </div>
       </div>
 
-      <table aria-label="Grantees table">
-        <thead>
-          <tr>
-            <th style="width:18%">Name</th>
-            <th style="width:8%">Age</th>
-            <th>Project</th>
-            <th style="width:16%">Tags</th>
-            <th style="width:14%">Grant date</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
+      <div class="table-wrap">
+        <table aria-label="Programs table">
+          <thead>
+            <tr>
+              <th style="width:16%">Name</th>
+              <th style="width:16%">Website</th>
+              <th>Description</th>
+              <th style="width:12%">Where</th>
+              <th style="width:14%">Type of housing</th>
+              <th style="width:12%">Length of stay</th>
+              <th style="width:14%">Funding?</th>
+              <th style="width:16%">Target audience</th>
+              <th style="width:16%">Who to contact</th>
+              <th style="width:14%">Tags</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
 
       <div class="reachout">
-        Reach out to <a href="#" class="mono">July</a> and <a href="#" class="mono">Kaan</a> if you have questions.
-        <div class="mono" style="margin-top:8px; display:flex; gap:18px; flex-wrap:wrap;">
-          <a href="#">Giulia SIroni</a>
-          <a href="#">Kaan Ismet Ylmaz</a>
-        </div>
-      </div>
-
-      <div class="section-sub" style="margin-top:14px;">
-        Want to help us make people’s dreams come true? Become a mentor. 
-          <a href="#">Book a call</a>
-      </div>
-      <div class="section-sub" style="margin-top:14px;">
-        We reach 200 students in school. Book a call
-          <a href="#">Book a call</a>
+        Reach out to <a href="#" class="mono">Giulia Sironi</a> and <a href="#" class="mono">Kaan Ismet Yilmaz</a> if you have questions, choice paralizze or want to bring this in your school. We meet around 200 students for now.
       </div>
 
       <div class="tinyfooter">
-        <a href="#" class="mono">Lucky is a no profit!</a>
+        <a href="#" class="mono">Made by human on earth (for now) </a>
       </div>
     </section>
   </div>
 
   <script>
     // ----------------------------
-    // Table data
+    // Programs data (from your pasted rows)
     // ----------------------------
-const DATA = [
-  {
-    name: "1517 Medici Project",
-    age: "HS / college / dropouts",
-    project: "$1,000 to launch projects to make humanity better.",
-    tags: ["grant", "builders"]
-  },
-  {
-    name: "776 Fellowship",
-    age: "Young people",
-    project: "$100,000 for young people tackling climate change.",
-    tags: ["climate", "fellowship"]
-  },
-  {
-    name: "Activate Fellowship",
-    age: "—",
-    project: "$280k–$395k to empower scientists to reinvent the world.",
-    tags: ["science", "fellowship"]
-  },
-  {
-    name: "Adamnite Microgrants",
-    age: "University students",
-    project: "$1,000+ microgrants for university builders (Web3) + mentorship.",
-    tags: ["software", "grant"]
-  },
-  {
-    name: "Antikythera Studio",
-    age: "—",
-    project: "$5k for interdisciplinary studio researchers building speculative prototypes.",
-    tags: ["deep tech", "research"]
-  },
-  {
-    name: "Awesome Foundation",
-    age: "—",
-    project: "$1k/month for awesome projects (chapters worldwide).",
-    tags: ["grant"]
-  },
-  {
-    name: "Cosmos (Cosmos Ventures / Fellowship)",
-    age: "—",
-    project: "$1k–$10k fast grants for prototyping in philosophy of technology.",
-    tags: ["deep tech", "grant"]
-  },
-  {
-    name: "DojoGrants (Nucleate)",
-    age: "Undergrads",
-    project: "Up to $8,000 for undergrad life sciences research (institution-agnostic).",
-    tags: ["biotech", "health tech"]
-  },
-  {
-    name: "EA Funds",
-    age: "—",
-    project: "$5k–$200k for projects that improve the world (fund-dependent).",
-    tags: ["grant"]
-  },
-  {
-    name: "Emergent Ventures",
-    age: "—",
-    project: ">$5,000 (heard up to $250k) for scalable “zero to one” ideas improving society.",
-    tags: ["grant"]
-  },
-  {
-    name: "Inflection Grants (Cyan Banister)",
-    age: "Under 25",
-    project: "$2,000 for under-25 builders.",
-    tags: ["grant", "builders"]
-  },
-  {
-    name: "New Science",
-    age: "—",
-    project: "$6k/month stipend + $5k/month project costs + $25k compute credits (fellowship).",
-    tags: ["research", "deep tech"]
-  },
-  {
-    name: "O’Shaughnessy Fellowship (OSV)",
-    age: "—",
-    project: "$100,000 for ambitious people who want to build something great.",
-    tags: ["fellowship", "builders"]
-  },
-  {
-    name: "Protostars (Blackbird)",
-    age: "Young people",
-    project: "$1,000 for passion projects.",
-    tags: ["grant", "builders"]
-  },
-  {
-    name: "Rise Program",
-    age: "15–17",
-    project: "Starts ages 15–17; scholarships, mentorship, funding, and long-term support.",
-    tags: ["fellowship", "education"]
-  },
-  {
-    name: "Silicon Valley Fellowship",
-    age: "—",
-    project: "$1k–$5k + community/mentors/talks/events (SV + online).",
-    tags: ["builders", "community"]
-  },
-  {
-    name: "Telora",
-    age: "Young people",
-    project: "$40k for individuals/teams willing to move to Miami for 6 months.",
-    tags: ["fellowship", "builders"]
-  },
-  {
-    name: "Thiel Fellowship",
-    age: "16–22",
-    project: "$100,000 for ages 16–22 to pursue projects full-time.",
-    tags: ["fellowship", "builders"]
-  },
-  {
-    name: "WTFund",
-    age: "≤ 25 (India)",
-    project: "~$25,000 for people 25 and under (Indian registered entity; they help with legal).",
-    tags: ["grant", "builders"]
-  },
-  {
-    name: "Z Fellows",
-    age: "—",
-    project: "$10,000 to go all-in on your project for one week (cohort + mentors).",
-    tags: ["builders", "cohort"]
-  },
-  {
-    name: "Bagel Fund",
-    age: "—",
-    project: "$100–$500 microgrants.",
-    tags: ["grant"]
-  },
-  {
-    name: "Merge Grant",
-    age: "—",
-    project: "$50–$1k microgrants to kick off projects.",
-    tags: ["grant"]
-  }
+     const DATA = [
+
+{
+name: "1517 Medici Project",
+website: "https://www.1517fund.com/medici",
+description: "$1,000 to launch projects that make humanity better.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$1,000",
+audience: "High school, college students, dropouts",
+contact: "?",
+tags: ["grant","builders"]
+},
+
+{
+name: "776 Fellowship",
+website: "https://www.776.org/fellowship",
+description: "$100,000 fellowship for young people tackling climate change.",
+where: "Global",
+housingType: "Fellowship",
+length: "2 years",
+funding: "$100,000",
+audience: "Young people",
+contact: "?",
+tags: ["climate","fellowship"]
+},
+
+{
+name: "Activate Fellowship",
+website: "https://www.activate.org/",
+description: "$280k–$395k fellowship empowering scientists to reinvent the world.",
+where: "US",
+housingType: "Fellowship",
+length: "2 years",
+funding: "$280k–$395k",
+audience: "Scientists and researchers",
+contact: "?",
+tags: ["science","fellowship"]
+},
+
+{
+name: "Adamnite Microgrants",
+website: "https://adamnite.xyz/",
+description: "$1,000+ microgrants and mentorship for university builders (Web3).",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$1,000+",
+audience: "University students",
+contact: "?",
+tags: ["software","grant"]
+},
+
+{
+name: "Antikythera Studio",
+website: "https://antikythera.org/",
+description: "$5k grants for interdisciplinary researchers building speculative prototypes.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$5,000",
+audience: "Researchers and technologists",
+contact: "?",
+tags: ["deep tech","research"]
+},
+
+{
+name: "Awesome Foundation",
+website: "https://www.awesomefoundation.org/",
+description: "$1,000 monthly grants for awesome community projects.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$1,000",
+audience: "Anyone",
+contact: "?",
+tags: ["grant"]
+},
+
+{
+name: "Cosmos Grants",
+website: "https://cosmos.so/",
+description: "$1k–$10k fast grants for projects in philosophy of technology.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$1k–$10k",
+audience: "Researchers and builders",
+contact: "?",
+tags: ["deep tech","grant"]
+},
+
+{
+name: "DojoGrants (Nucleate)",
+website: "https://dojo.nucleate.xyz/dojohouse",
+description: "Up to $8,000 for undergraduate life sciences research.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$8,000",
+audience: "Undergraduate biotech students",
+contact: "?",
+tags: ["biotech","health tech"]
+},
+
+{
+name: "Emergent Ventures",
+website: "https://www.mercatus.org/emergent-ventures",
+description: "$5k–$250k grants for zero-to-one ideas improving society.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$5k–$250k",
+audience: "Entrepreneurs and researchers",
+contact: "?",
+tags: ["grant"]
+},
+
+{
+name: "Inflection Grants",
+website: "https://www.cyanbanister.com/",
+description: "$2,000 grants for builders under 25.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$2,000",
+audience: "Builders under 25",
+contact: "?",
+tags: ["grant","builders"]
+},
+
+{
+name: "New Science Fellowship",
+website: "https://newscience.org/",
+description: "$6k/month stipend + project funding and compute credits.",
+where: "Global",
+housingType: "Fellowship",
+length: "?",
+funding: "$6k/month",
+audience: "Researchers",
+contact: "?",
+tags: ["research","deep tech"]
+},
+
+{
+name: "O'Shaughnessy Fellowship",
+website: "https://www.osv.com/fellowship",
+description: "$100,000 fellowship for ambitious builders.",
+where: "Global",
+housingType: "Fellowship",
+length: "1 year",
+funding: "$100,000",
+audience: "Builders",
+contact: "?",
+tags: ["fellowship","builders"]
+},
+
+{
+name: "Thiel Fellowship",
+website: "https://thielfellowship.org/",
+description: "$100,000 for young people to pursue projects instead of college.",
+where: "US",
+housingType: "Fellowship",
+length: "2 years",
+funding: "$100,000",
+audience: "Ages 16–22",
+contact: "?",
+tags: ["fellowship","builders"]
+},
+
+{
+name: "Z Fellows",
+website: "https://zfellows.com/",
+description: "$10,000 to work on a project for one week with mentors.",
+where: "Global",
+housingType: "Grant",
+length: "1 week",
+funding: "$10,000",
+audience: "Young builders",
+contact: "?",
+tags: ["builders","cohort"]
+},
+
+{
+name: "Bagel Fund",
+website: "https://bagel.fund/",
+description: "$100–$500 microgrants for builders.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$100–$500",
+audience: "Young builders",
+contact: "?",
+tags: ["grant"]
+},
+
+{
+name: "Merge Grant",
+website: "https://merge.xyz/",
+description: "$50–$1k microgrants to kickstart projects.",
+where: "Global",
+housingType: "Grant",
+length: "?",
+funding: "$50–$1k",
+audience: "Builders",
+contact: "?",
+tags: ["grant"]
+},
+
+{
+name: "Nautilus",
+website: "https://www.nautilus.quest/",
+description: "Young artist, maker, founder house with patron funding.",
+where: "San Francisco",
+housingType: "Community house",
+length: "3 months",
+funding: "Yes",
+audience: "Young makers, artists, founders",
+contact: "https://x.com/zeldapoem",
+tags: ["community house","sf","artists","builders"]
+},
+
+{
+name: "FR8",
+website: "https://www.fr8.so/",
+description: "Build the future with young mavericks in Europe.",
+where: "Finland",
+housingType: "Hotel",
+length: "3 months",
+funding: "?",
+audience: "Young makers",
+contact: "https://x.com/ErnestiSario",
+tags: ["hotel","europe","builders"]
+},
+
+{
+name: "The Residency",
+website: "https://www.livetheresidency.com/",
+description: "Live with ambitious builders (many houses worldwide).",
+where: "Global",
+housingType: "Community house",
+length: "?",
+funding: "?",
+audience: "Ambitious makers",
+contact: "https://x.com/nick_linck",
+tags: ["community house","global","builders"]
+},
+
+{
+name: "Nucleate DojoHouse",
+website: "https://dojo.nucleate.xyz/dojohouse",
+description: "Undergraduate biotech house.",
+where: "Boston & San Francisco",
+housingType: "Community house",
+length: "?",
+funding: "Yes",
+audience: "Undergraduates in biotech",
+contact: "?",
+tags: ["community house","biotech","sf","builders"]
+},
+
+{
+name: "Haight St. Commons",
+website: "https://haight-st-commons.org/",
+description: "Directory of Bay Area community houses.",
+where: "Bay Area",
+housingType: "Community houses",
+length: "Varied",
+funding: "No",
+audience: "People interested in community living",
+contact: "?",
+tags: ["community house","sf","builders"]
+},
+
+{
+name: "Aevitas House",
+website: "http://www.aevitashouse.bio",
+description: "Community house/residency in SF focused on longevity and biotech.",
+where: "San Francisco",
+housingType: "Community house",
+length: "?",
+funding: "?",
+audience: "Entrepreneurs, scientists, biotech students",
+contact: "https://x.com/techno0ptimist",
+tags: ["community house","sf","biotech","builders"]
+}
+
 ];
 
     // ----------------------------
@@ -480,33 +605,77 @@ const DATA = [
     const tbody = document.getElementById("rows");
 
     function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, m => ({
+      return String(s ?? "").replace(/[&<>"']/g, m => ({
         "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
       }[m]));
     }
+
     function pillHTML(tag){
       return `<span class="pill mono">${escapeHtml(tag)}</span>`;
     }
+
+    function linkOrText(url){
+      const u = String(url ?? "").trim();
+      if (!u || u === "?") return `<span class="mono">?</span>`;
+      return `<a class="mono" href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer">${escapeHtml(u)}</a>`;
+    }
+
+    function websiteLink(url){
+      const u = String(url ?? "").trim();
+      if (!u || u === "?") return `<span class="mono">?</span>`;
+      const label = u.replace(/^https?:\/\//, "").replace(/\/$/, "");
+      return `<a class="mono" href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+    }
+
     function rowHTML(item){
       return `
         <tr>
-          <td><a href="#" class="mono">${escapeHtml(item.name)}</a></td>
-          <td class="mono">${item.age}</td>
-          <td>${escapeHtml(item.project)}</td>
-          <td><div class="tagstack">${item.tags.map(pillHTML).join("")}</div></td>
-          <td class="mono">${escapeHtml(item.date)}</td>
+          <td class="mono">${escapeHtml(item.name)}</td>
+          <td>${websiteLink(item.website)}</td>
+          <td>${escapeHtml(item.description)}</td>
+          <td>${escapeHtml(item.where)}</td>
+          <td>${escapeHtml(item.housingType)}</td>
+          <td class="mono">${escapeHtml(item.length)}</td>
+          <td class="mono">${escapeHtml(item.funding)}</td>
+          <td>${escapeHtml(item.audience)}</td>
+          <td>${linkOrText(item.contact)}</td>
+          <td><div class="tagstack">${(item.tags || []).map(pillHTML).join("")}</div></td>
         </tr>
       `;
     }
+
+    // ----------------------------
+    // Search + tag filtering
+    // ----------------------------
+    const search = document.getElementById("search");
+    const chips = Array.from(document.getElementById("filters").querySelectorAll(".chip"));
+
+    function getActiveTags(){
+      return chips.filter(c => c.dataset.on === "true").map(c => c.dataset.tag.toLowerCase());
+    }
+
     function applyFilters(){
       const q = search.value.trim().toLowerCase();
-      const active = chips.filter(c => c.dataset.on === "true").map(c => c.dataset.tag.toLowerCase());
+      const active = getActiveTags();
 
       const filtered = DATA.filter(item => {
-        const text = (item.name + " " + item.project + " " + item.tags.join(" ")).toLowerCase();
+        const text = (
+          item.name + " " +
+          item.website + " " +
+          item.description + " " +
+          item.where + " " +
+          item.housingType + " " +
+          item.length + " " +
+          item.funding + " " +
+          item.audience + " " +
+          item.contact + " " +
+          (item.tags || []).join(" ")
+        ).toLowerCase();
+
         if (q && !text.includes(q)) return false;
+
         if (active.length){
-          const set = new Set(item.tags.map(t => t.toLowerCase()));
+          const set = new Set((item.tags || []).map(t => t.toLowerCase()));
           if (!active.some(t => set.has(t))) return false;
         }
         return true;
@@ -515,22 +684,18 @@ const DATA = [
       tbody.innerHTML = filtered.map(rowHTML).join("");
     }
 
-    const search = document.getElementById("search");
-    const chips = Array.from(document.getElementById("filters").querySelectorAll(".chip"));
     chips.forEach(chip => {
       chip.addEventListener("click", () => {
         chip.dataset.on = (chip.dataset.on !== "true").toString();
         applyFilters();
       });
     });
+
     search.addEventListener("input", applyFilters);
     applyFilters();
 
     // ============================================================
-    // FULL-WIDTH PARTICLE WAVE STRIP
-    // - particles: blue (NOT gray)
-    // - wave: neon purple
-    // - wave phase anchored at mouse (starts where mouse is)
+    // FULL-WIDTH PARTICLE WAVE STRIP (particles-only, mouse wave)
     // ============================================================
     const waveDiv = document.getElementById("topwave");
     const canvas = document.getElementById("waveStrip");
@@ -545,7 +710,7 @@ const DATA = [
       H = Math.floor(r.height);
       canvas.width  = Math.floor(W * dpr);
       canvas.height = Math.floor(H * dpr);
-      ctx.setTransform(dpr,0,0,dpr,0,0); // draw in CSS pixels
+      ctx.setTransform(dpr,0,0,dpr,0,0);
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
@@ -565,52 +730,46 @@ const DATA = [
     function clamp(v,a,b){ return Math.max(a, Math.min(b,v)); }
     function lerp(a,b,t){ return a + (b-a)*t; }
 
-    // Wave path (starts where the mouse is via (x - mouse.x))
+    const WAVE = {
+      sigma: 20,
+      k1: 2 * Math.PI / 360,
+      k2: 2 * Math.PI / 190,
+      A1: 30,
+      A2: 13,
+      s1: 2.2,
+      s2: 1.4
+    };
+
     function waveY(x, t){
-      const base = clamp(mouse.y, H*0.25, H*0.85);
+      const base = clamp(mouse.y, H * 0.25, H * 0.85);
       const phase = (x - mouse.x);
-
-      const k1 = 2*Math.PI / 360;
-      const k2 = 2*Math.PI / 190;
-
-      const A1 = 30;
-      const A2 = 13;
-
       return base
-        + Math.sin(phase*k1 - t*2.2) * A1
-        + Math.sin(phase*k2 - t*1.4) * A2;
+        + Math.sin(phase * WAVE.k1 - t * WAVE.s1) * WAVE.A1
+        + Math.sin(phase * WAVE.k2 - t * WAVE.s2) * WAVE.A2;
     }
 
-    // Soft tube around wave
     function falloff(dist){
-      const sigma = 26;
-      return Math.exp(-(dist*dist)/(2*sigma*sigma));
+      const s = WAVE.sigma;
+      return Math.exp(-(dist * dist) / (2 * s * s));
     }
 
-    // Colors you asked for:
-    // particles: blue-ish; wave line: neon purple
-    const PARTICLE_RGB = { r: 30, g: 120, b: 255 };      // blue
-    const WAVE_RGB     = { r: 190, g: 60,  b: 255 };     // neon-ish purple
-
+    const PARTICLE_RGB = { r: 0, g: 180, b: 255};
     let t0 = performance.now();
 
     function draw(now){
       const t = (now - t0) / 1000;
 
-      // smooth tracking (wave starts at mouse)
-      const follow = mouse.active ? 0.18 : 0.06;
+      const follow = mouse.active ? 0.22 : 0.06;
       mouse.x = lerp(mouse.x, mouse.tx || mouse.x, follow);
       mouse.y = lerp(mouse.y, mouse.ty || mouse.y, follow);
 
       ctx.clearRect(0,0,W,H);
 
-      // ultra-light paper wash
-      ctx.fillStyle = "rgba(0,0,0,0.01)";
+      ctx.fillStyle = "rgba(0,0,0,0.008)";
       ctx.fillRect(0,0,W,H);
 
-      // particle grid (density controls)
-      const cols = Math.max(120, Math.floor(W / 6));  // scale with width
-      const rows = Math.max(22,  Math.floor(H / 9));
+      const cols = Math.max(140, Math.floor(W / 6));
+      const rows = Math.max(26,  Math.floor(H / 9));
       const padX = 14, padY = 14;
 
       const gx0 = padX, gx1 = W - padX;
@@ -618,7 +777,8 @@ const DATA = [
       const dx = (gx1 - gx0) / (cols - 1);
       const dy = (gy1 - gy0) / (rows - 1);
 
-      // draw particles; increase alpha near the wave
+      const wavePower = mouse.active ? 1.0 : 0.25;
+
       for(let j=0;j<rows;j++){
         const py = gy0 + j*dy;
         for(let i=0;i<cols;i++){
@@ -626,55 +786,33 @@ const DATA = [
 
           const wy = waveY(px, t);
           const dist = Math.abs(py - wy);
-          const f = falloff(dist); // 0..1
+          const f = falloff(dist) * wavePower;
 
-          if (f < 0.03) continue;
+          if (f < 0.02) continue;
 
-          // subtle shimmer
-          const shimmer = 0.5 + 0.5*Math.sin((px*0.03 + py*0.02) + t*2.4);
-          const alpha = 0.02 + 0.22 * f * (0.6 + 0.4*shimmer);
-          const r = 0.7 + 2.4 * f;
+          const shimmer = 0.6 + 0.4*Math.sin((px*0.03 + py*0.02) + t*2.6);
 
-          const jitter = (Math.sin((px+py)*0.02 + t*3.0) * 1.2) * f;
+          const r = 0.7 + (3.8 * f);
 
-          ctx.fillStyle = `rgba(${PARTICLE_RGB.r},${PARTICLE_RGB.g},${PARTICLE_RGB.b},${alpha})`;
+          const dark = f;
+          const rr = Math.floor(lerp(PARTICLE_RGB.r, 0, dark));
+          const gg = Math.floor(lerp(PARTICLE_RGB.g, 200, dark));
+          const bb = Math.floor(lerp(PARTICLE_RGB.b, 255, dark));
+
+          const alpha = (0.03 + 0.30 * f) * shimmer;
+
+          const jitter = (Math.sin((px+py)*0.02 + t*3.0) * 1.3) * f;
+
+          ctx.fillStyle = `rgba(${rr},${gg},${bb},${alpha})`;
           ctx.beginPath();
           ctx.arc(px + jitter, py, r, 0, Math.PI*2);
           ctx.fill();
         }
       }
 
-      // neon purple wave line on top
-      // glow pass
-      ctx.save();
-      ctx.lineWidth = 6;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = `rgba(${WAVE_RGB.r},${WAVE_RGB.g},${WAVE_RGB.b},0.65)`;
-      ctx.strokeStyle = `rgba(${WAVE_RGB.r},${WAVE_RGB.g},${WAVE_RGB.b},0.65)`;
-      ctx.beginPath();
-      for(let x=0;x<=W;x+=6){
-        const y = waveY(x, t);
-        if (x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-      }
-      ctx.stroke();
-      ctx.restore();
-
-      // core line
-      ctx.lineWidth = 2.2;
-      ctx.strokeStyle = `rgba(${WAVE_RGB.r},${WAVE_RGB.g},${WAVE_RGB.b},0.95)`;
-      ctx.beginPath();
-      for(let x=0;x<=W;x+=6){
-        const y = waveY(x, t);
-        if (x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-      }
-      ctx.stroke();
-
-      // soft vignette
       const g = ctx.createRadialGradient(W*0.55, H*0.55, 20, W*0.55, H*0.55, Math.max(W,H)*0.75);
       g.addColorStop(0, "rgba(255,255,255,0)");
-      g.addColorStop(1, "rgba(255,255,255,0.7)");
+      g.addColorStop(1, "rgba(255,255,255,0.72)");
       ctx.fillStyle = g;
       ctx.fillRect(0,0,W,H);
 
