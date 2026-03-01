@@ -132,6 +132,7 @@
     }
     .filters{
       display:flex;
+      display: none;
       gap:8px;
       flex-wrap:wrap;
       align-items:center;
@@ -265,7 +266,7 @@
         <div class="filters" id="filters">
           <span class="label mono">Filter by tag:</span>
           <label class="chip" data-tag="community house"><input type="checkbox">community house</label>
-          <label class="chip" data-tag="hotel"><input type="checkbox">hotel</label>
+          <label class="chip" data-tag="grant"><input type="checkbox">grant</label>
           <label class="chip" data-tag="global"><input type="checkbox">global</label>
           <label class="chip" data-tag="sf"><input type="checkbox">sf</label>
           <label class="chip" data-tag="europe"><input type="checkbox">europe</label>
@@ -296,7 +297,7 @@
       </div>
 
       <div class="reachout">
-        Reach out to <a href="#" class="mono">Giulia Sironi</a> and <a href="#" class="mono">Kaan Ismet Yilmaz</a> if you have questions, choice paralizze or want to bring this in your school. We meet around 200 students for now.
+        Reach out to <a href="https://www.linkedin.com/in/giulia-sironi/" target="_blank" class="mono">Giulia Sironi</a> and <a href="https://www.linkedin.com/in/ismet-kaan-yilmaz-809175245/" target="_blank" class="mono">Ismet Kaan Yilmaz</a> if you have questions, choice paralysis or you just want to bring this in your school. We met around 200 students for now.
       </div>
 
       <div class="tinyfooter">
@@ -777,7 +778,7 @@ tags: ["community house","sf","biotech","builders"]
       const dx = (gx1 - gx0) / (cols - 1);
       const dy = (gy1 - gy0) / (rows - 1);
 
-      const wavePower = mouse.active ? 1.0 : 0.25;
+      const wavePower = mouse.active ? 1.0 : 0.5;
 
       for(let j=0;j<rows;j++){
         const py = gy0 + j*dy;
