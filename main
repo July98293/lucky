@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>This site will make you lucky</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --chip:#f3f3f3;
+      --chipText:#222;
+      --link:#1a5bd7;
+      --btn:#111;
+      --btnText:#fff;
+      --shadow: 0 1px 0 rgba(0,0,0,.03);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.35;
+    }
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* FULL-WIDTH PARTICLE WAVE STRIP (replaces bagel/logo entirely) */
+    .topwave{
+      position:relative;
+      height: 240px;                 /* make this taller/shorter */
+      overflow:hidden;
+      background:#fff;
+    }
+    #waveStrip{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      display:block;
+      pointer-events:auto;           /* we want mouse events */
+    }
+
+    .wrap{
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    /* Header */
+    .hero{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 12px;
+      margin-top: -110px;            /* pulls content upward into the wave area */
+      margin-bottom: 18px;
+      position:relative;
+      z-index: 2;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0;
+      font-weight: 700;
+      text-align:center;
+    }
+
+    .blurb{
+      font-size: 12px;
+      color:var(--muted);
+      max-width: 640px;
+      text-align:left;
+      width:100%;
+    }
+    .blurb p{margin: 6px 0}
+
+    .smalllinks{
+      margin-top: 6px;
+      width:100%;
+      font-size: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+    }
+
+    .divider{
+      border:0;
+      border-top:1px solid var(--border);
+      margin: 18px 0;
+    }
+
+    /* Section titles */
+    .section-title{
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+    .section-sub{
+      font-size: 12px;
+      color:var(--muted);
+      margin: 0 0 12px;
+    }
+
+    /* Search + filters */
+    .controls{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin: 10px 0 12px;
+    }
+    .search{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 10px;
+      font-size: 12px;
+      outline:none;
+      box-shadow: var(--shadow);
+    }
+    .filters{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-size: 12px;
+    }
+    .filters .label{
+      color:var(--muted);
+      margin-right: 4px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border:1px solid var(--border);
+      background: var(--chip);
+      color: var(--chipText);
+      border-radius: 999px;
+      padding: 6px 10px;
+      user-select:none;
+      cursor:pointer;
+      font-size: 12px;
+    }
+    .chip input{display:none}
+    .chip[data-on="true"]{
+      background:#111;
+      color:#fff;
+      border-color:#111;
+    }
+
+    /* Table */
+    table{
+      width:100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    thead th{
+      text-align:left;
+      padding: 10px 8px;
+      color: var(--muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody td{
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .mono{font-family: var(--mono)}
+    .tagstack{display:flex; gap:6px; flex-wrap:wrap}
+    .pill{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:999px;
+      padding: 3px 8px;
+      font-size: 11px;
+      color:#333;
+    }
+
+    /* Footer + donate cards */
+    .reachout{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 14px;
+    }
+    .donateRow{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .card{
+      border:1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: var(--shadow);
+    }
+    .card h3{
+      margin:0 0 6px;
+      font-size: 12px;
+    }
+    .card p{
+      margin:0 0 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .btn{
+      appearance:none;
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+    }
+    .btn:active{transform: translateY(1px)}
+    .card .btn{
+      width:100%;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .tinyfooter{
+      margin-top: 18px;
+      font-size: 11px;
+      color: var(--muted);
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 680px){
+      .donateRow{grid-template-columns: 1fr}
+      .hero{margin-top: -95px}
+      .topwave{height: 220px}
+      .blurb iframe{width:100%; height: 220px}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- FULL STRIP WAVE PARTICLES (no bagel, no logo) -->
+  <div class="topwave" id="topwave">
+    <canvas id="waveStrip"></canvas>
+  </div>
+
+  <div class="wrap">
+    <header class="hero">
+      <h1>This site will make you lucky!</h1>
+
+      <div class="blurb">
+        <p><strong>What is this site?</strong> A repository of opportunity, to make easier for you to get "lucky".</p>
+        <iframe width="560" height="315"
+          src="https://www.youtube.com/embed/NmEyx9TEkRw"
+          title="How to Create Luck - Dalton Caldwell"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="smalllinks">
+        <a href="#" class="mono">Expose yourself to as much opportunity and situation as you can.</a>
+        <span class="mono" style="color:var(--muted)">·</span>
+        <a href="#" class="mono">Meet as many interesting people that you can.</a>
+      </div>
+    </header>
+
+    <hr class="divider"/>
+
+    <section>
+      <div class="section-title">Need help?</div>
+      <div class="section-sub">
+        If you <a href="#" class="mono">Email us</a> your question.
+      </div>
+
+      <div class="controls">
+        <input id="search" class="search" placeholder="Search by age or intrest..." />
+        <div class="filters" id="filters">
+          <span class="label mono">Filter by tag:</span>
+          <label class="chip" data-tag="software"><input type="checkbox">software</label>
+          <label class="chip" data-tag="deep tech"><input type="checkbox">deep tech</label>
+          <label class="chip" data-tag="health tech"><input type="checkbox">health tech</label>
+          <label class="chip" data-tag="climate"><input type="checkbox">climate</label>
+          <label class="chip" data-tag="robotics"><input type="checkbox">robotics</label>
+          <label class="chip" data-tag="aerospace"><input type="checkbox">aerospace</label>
+          <label class="chip" data-tag="ai"><input type="checkbox">ai</label>
+          <label class="chip" data-tag="biotech"><input type="checkbox">biotech</label>
+          <label class="chip" data-tag="agriculture"><input type="checkbox">agriculture</label>
+        </div>
+      </div>
+
+      <table aria-label="Grantees table">
+        <thead>
+          <tr>
+            <th style="width:18%">Name</th>
+            <th style="width:8%">Age</th>
+            <th>Project</th>
+            <th style="width:16%">Tags</th>
+            <th style="width:14%">Grant date</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+
+      <div class="reachout">
+        Reach out to <a href="#" class="mono">July</a> and <a href="#" class="mono">Kaan</a> if you have questions.
+        <div class="mono" style="margin-top:8px; display:flex; gap:18px; flex-wrap:wrap;">
+          <a href="#">Giulia SIroni</a>
+          <a href="#">Kaan Ismet Ylmaz</a>
+        </div>
+      </div>
+
+      <div class="section-sub" style="margin-top:14px;">
+        Want to help us make people’s dreams come true? Become a mentor. 
+          <a href="#">Book a call</a>
+      </div>
+      <div class="section-sub" style="margin-top:14px;">
+        We reach 200 students in school. Book a call
+          <a href="#">Book a call</a>
+      </div>
+
+      <div class="tinyfooter">
+        <a href="#" class="mono">Lucky is a no profit!</a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ----------------------------
+    // Table data
+    // ----------------------------
+const DATA = [
+  {
+    name: "1517 Medici Project",
+    age: "HS / college / dropouts",
+    project: "$1,000 to launch projects to make humanity better.",
+    tags: ["grant", "builders"]
+  },
+  {
+    name: "776 Fellowship",
+    age: "Young people",
+    project: "$100,000 for young people tackling climate change.",
+    tags: ["climate", "fellowship"]
+  },
+  {
+    name: "Activate Fellowship",
+    age: "—",
+    project: "$280k–$395k to empower scientists to reinvent the world.",
+    tags: ["science", "fellowship"]
+  },
+  {
+    name: "Adamnite Microgrants",
+    age: "University students",
+    project: "$1,000+ microgrants for university builders (Web3) + mentorship.",
+    tags: ["software", "grant"]
+  },
+  {
+    name: "Antikythera Studio",
+    age: "—",
+    project: "$5k for interdisciplinary studio researchers building speculative prototypes.",
+    tags: ["deep tech", "research"]
+  },
+  {
+    name: "Awesome Foundation",
+    age: "—",
+    project: "$1k/month for awesome projects (chapters worldwide).",
+    tags: ["grant"]
+  },
+  {
+    name: "Cosmos (Cosmos Ventures / Fellowship)",
+    age: "—",
+    project: "$1k–$10k fast grants for prototyping in philosophy of technology.",
+    tags: ["deep tech", "grant"]
+  },
+  {
+    name: "DojoGrants (Nucleate)",
+    age: "Undergrads",
+    project: "Up to $8,000 for undergrad life sciences research (institution-agnostic).",
+    tags: ["biotech", "health tech"]
+  },
+  {
+    name: "EA Funds",
+    age: "—",
+    project: "$5k–$200k for projects that improve the world (fund-dependent).",
+    tags: ["grant"]
+  },
+  {
+    name: "Emergent Ventures",
+    age: "—",
+    project: ">$5,000 (heard up to $250k) for scalable “zero to one” ideas improving society.",
+    tags: ["grant"]
+  },
+  {
+    name: "Inflection Grants (Cyan Banister)",
+    age: "Under 25",
+    project: "$2,000 for under-25 builders.",
+    tags: ["grant", "builders"]
+  },
+  {
+    name: "New Science",
+    age: "—",
+    project: "$6k/month stipend + $5k/month project costs + $25k compute credits (fellowship).",
+    tags: ["research", "deep tech"]
+  },
+  {
+    name: "O’Shaughnessy Fellowship (OSV)",
+    age: "—",
+    project: "$100,000 for ambitious people who want to build something great.",
+    tags: ["fellowship", "builders"]
+  },
+  {
+    name: "Protostars (Blackbird)",
+    age: "Young people",
+    project: "$1,000 for passion projects.",
+    tags: ["grant", "builders"]
+  },
+  {
+    name: "Rise Program",
+    age: "15–17",
+    project: "Starts ages 15–17; scholarships, mentorship, funding, and long-term support.",
+    tags: ["fellowship", "education"]
+  },
+  {
+    name: "Silicon Valley Fellowship",
+    age: "—",
+    project: "$1k–$5k + community/mentors/talks/events (SV + online).",
+    tags: ["builders", "community"]
+  },
+  {
+    name: "Telora",
+    age: "Young people",
+    project: "$40k for individuals/teams willing to move to Miami for 6 months.",
+    tags: ["fellowship", "builders"]
+  },
+  {
+    name: "Thiel Fellowship",
+    age: "16–22",
+    project: "$100,000 for ages 16–22 to pursue projects full-time.",
+    tags: ["fellowship", "builders"]
+  },
+  {
+    name: "WTFund",
+    age: "≤ 25 (India)",
+    project: "~$25,000 for people 25 and under (Indian registered entity; they help with legal).",
+    tags: ["grant", "builders"]
+  },
+  {
+    name: "Z Fellows",
+    age: "—",
+    project: "$10,000 to go all-in on your project for one week (cohort + mentors).",
+    tags: ["builders", "cohort"]
+  },
+  {
+    name: "Bagel Fund",
+    age: "—",
+    project: "$100–$500 microgrants.",
+    tags: ["grant"]
+  },
+  {
+    name: "Merge Grant",
+    age: "—",
+    project: "$50–$1k microgrants to kick off projects.",
+    tags: ["grant"]
+  }
+];
+
+    // ----------------------------
+    // Render table
+    // ----------------------------
+    const tbody = document.getElementById("rows");
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
+    }
+    function pillHTML(tag){
+      return `<span class="pill mono">${escapeHtml(tag)}</span>`;
+    }
+    function rowHTML(item){
+      return `
+        <tr>
+          <td><a href="#" class="mono">${escapeHtml(item.name)}</a></td>
+          <td class="mono">${item.age}</td>
+          <td>${escapeHtml(item.project)}</td>
+          <td><div class="tagstack">${item.tags.map(pillHTML).join("")}</div></td>
+          <td class="mono">${escapeHtml(item.date)}</td>
+        </tr>
+      `;
+    }
+    function applyFilters(){
+      const q = search.value.trim().toLowerCase();
+      const active = chips.filter(c => c.dataset.on === "true").map(c => c.dataset.tag.toLowerCase());
+
+      const filtered = DATA.filter(item => {
+        const text = (item.name + " " + item.project + " " + item.tags.join(" ")).toLowerCase();
+        if (q && !text.includes(q)) return false;
+        if (active.length){
+          const set = new Set(item.tags.map(t => t.toLowerCase()));
+          if (!active.some(t => set.has(t))) return false;
+        }
+        return true;
+      });
+
+      tbody.innerHTML = filtered.map(rowHTML).join("");
+    }
+
+    const search = document.getElementById("search");
+    const chips = Array.from(document.getElementById("filters").querySelectorAll(".chip"));
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chip.dataset.on = (chip.dataset.on !== "true").toString();
+        applyFilters();
+      });
+    });
+    search.addEventListener("input", applyFilters);
+    applyFilters();
+
+    // ============================================================
+    // FULL-WIDTH PARTICLE WAVE STRIP
+    // - particles: blue (NOT gray)
+    // - wave: neon purple
+    // - wave phase anchored at mouse (starts where mouse is)
+    // ============================================================
+    const waveDiv = document.getElementById("topwave");
+    const canvas = document.getElementById("waveStrip");
+    const ctx = canvas.getContext("2d");
+
+    let W=0, H=0, dpr=1;
+
+    function resizeCanvas(){
+      const r = waveDiv.getBoundingClientRect();
+      dpr = Math.max(1, window.devicePixelRatio || 1);
+      W = Math.floor(r.width);
+      H = Math.floor(r.height);
+      canvas.width  = Math.floor(W * dpr);
+      canvas.height = Math.floor(H * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0); // draw in CSS pixels
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const mouse = { x: W*0.25, y: H*0.55, tx: W*0.25, ty: H*0.55, active:false };
+
+    waveDiv.addEventListener("mousemove", (e) => {
+      const r = waveDiv.getBoundingClientRect();
+      mouse.tx = e.clientX - r.left;
+      mouse.ty = e.clientY - r.top;
+      mouse.active = true;
+    });
+    waveDiv.addEventListener("mouseleave", () => {
+      mouse.active = false;
+    });
+
+    function clamp(v,a,b){ return Math.max(a, Math.min(b,v)); }
+    function lerp(a,b,t){ return a + (b-a)*t; }
+
+    // Wave path (starts where the mouse is via (x - mouse.x))
+    function waveY(x, t){
+      const base = clamp(mouse.y, H*0.25, H*0.85);
+      const phase = (x - mouse.x);
+
+      const k1 = 2*Math.PI / 360;
+      const k2 = 2*Math.PI / 190;
+
+      const A1 = 30;
+      const A2 = 13;
+
+      return base
+        + Math.sin(phase*k1 - t*2.2) * A1
+        + Math.sin(phase*k2 - t*1.4) * A2;
+    }
+
+    // Soft tube around wave
+    function falloff(dist){
+      const sigma = 26;
+      return Math.exp(-(dist*dist)/(2*sigma*sigma));
+    }
+
+    // Colors you asked for:
+    // particles: blue-ish; wave line: neon purple
+    const PARTICLE_RGB = { r: 30, g: 120, b: 255 };      // blue
+    const WAVE_RGB     = { r: 190, g: 60,  b: 255 };     // neon-ish purple
+
+    let t0 = performance.now();
+
+    function draw(now){
+      const t = (now - t0) / 1000;
+
+      // smooth tracking (wave starts at mouse)
+      const follow = mouse.active ? 0.18 : 0.06;
+      mouse.x = lerp(mouse.x, mouse.tx || mouse.x, follow);
+      mouse.y = lerp(mouse.y, mouse.ty || mouse.y, follow);
+
+      ctx.clearRect(0,0,W,H);
+
+      // ultra-light paper wash
+      ctx.fillStyle = "rgba(0,0,0,0.01)";
+      ctx.fillRect(0,0,W,H);
+
+      // particle grid (density controls)
+      const cols = Math.max(120, Math.floor(W / 6));  // scale with width
+      const rows = Math.max(22,  Math.floor(H / 9));
+      const padX = 14, padY = 14;
+
+      const gx0 = padX, gx1 = W - padX;
+      const gy0 = padY, gy1 = H - padY;
+      const dx = (gx1 - gx0) / (cols - 1);
+      const dy = (gy1 - gy0) / (rows - 1);
+
+      // draw particles; increase alpha near the wave
+      for(let j=0;j<rows;j++){
+        const py = gy0 + j*dy;
+        for(let i=0;i<cols;i++){
+          const px = gx0 + i*dx;
+
+          const wy = waveY(px, t);
+          const dist = Math.abs(py - wy);
+          const f = falloff(dist); // 0..1
+
+          if (f < 0.03) continue;
+
+          // subtle shimmer
+          const shimmer = 0.5 + 0.5*Math.sin((px*0.03 + py*0.02) + t*2.4);
+          const alpha = 0.02 + 0.22 * f * (0.6 + 0.4*shimmer);
+          const r = 0.7 + 2.4 * f;
+
+          const jitter = (Math.sin((px+py)*0.02 + t*3.0) * 1.2) * f;
+
+          ctx.fillStyle = `rgba(${PARTICLE_RGB.r},${PARTICLE_RGB.g},${PARTICLE_RGB.b},${alpha})`;
+          ctx.beginPath();
+          ctx.arc(px + jitter, py, r, 0, Math.PI*2);
+          ctx.fill();
+        }
+      }
+
+      // neon purple wave line on top
+      // glow pass
+      ctx.save();
+      ctx.lineWidth = 6;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = `rgba(${WAVE_RGB.r},${WAVE_RGB.g},${WAVE_RGB.b},0.65)`;
+      ctx.strokeStyle = `rgba(${WAVE_RGB.r},${WAVE_RGB.g},${WAVE_RGB.b},0.65)`;
+      ctx.beginPath();
+      for(let x=0;x<=W;x+=6){
+        const y = waveY(x, t);
+        if (x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // core line
+      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = `rgba(${WAVE_RGB.r},${WAVE_RGB.g},${WAVE_RGB.b},0.95)`;
+      ctx.beginPath();
+      for(let x=0;x<=W;x+=6){
+        const y = waveY(x, t);
+        if (x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+
+      // soft vignette
+      const g = ctx.createRadialGradient(W*0.55, H*0.55, 20, W*0.55, H*0.55, Math.max(W,H)*0.75);
+      g.addColorStop(0, "rgba(255,255,255,0)");
+      g.addColorStop(1, "rgba(255,255,255,0.7)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,W,H);
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>
